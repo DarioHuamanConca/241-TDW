@@ -1,0 +1,21 @@
+{
+  "name": "reto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:build": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css",
+    "tailwind:watch": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch",
+    "flask:run": "venv\\Scripts\\python app.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "tailwindcss": "^4.2.4"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.4"
+  }
+}

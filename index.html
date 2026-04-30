@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD con Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+
+<body class="bg-gray-100 p-6 animate-fade-in">
+    <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Mi CRUD con Flask</h1>
+
+        <!-- Mensajes Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="mb-4 p-3 rounded 
+                {% if category == 'success' %}bg-green-100 text-green-700
+                {% elif category == 'warning' %}bg-yellow-100 text-yellow-700
+                {% elif category == 'info' %}bg-blue-100 text-blue-700
+                {% else %}bg-red-100 text-red-700{% endif %}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Buscador -->
+        <form method="get" class="mb-6 flex gap-2">
+            <input name="q" placeholder="Buscar ítems..." class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-blue-500 outline-none" />
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-colors">Buscar</button>
+        </form>
+
+        <!-- Formulario Agregar -->
+        <form action="/add" method="post" class="flex gap-2 mb-8 bg-gray-50 p-4 rounded-lg border border-dashed border-gray-300">
+            <input name="name" placeholder="Escribe un nuevo ítem..." class="border border-gray-300 rounded-lg p-2 flex-1 focus:ring-2 focus:ring-green-500 outline-none" required />
+            <button class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition-colors font-semibold">Agregar</button>
+        </form>
+
+        <!-- Lista de Ítems -->
+        <ul class="divide-y divide-gray-200">
+            {% for item in items %}
+            <li class="flex justify-between items-center py-4 hover:bg-gray-50 px-2 rounded-lg transition-colors">
+                <span class="text-gray-700 font-medium">{{ item.name }}</span>
+                <div class="flex gap-3">
+                    <a href="/edit/{{ item.id }}" class="text-blue-500 hover:text-blue-700 font-semibold text-sm">Editar</a>
+                    <a href="/delete/{{ item.id }}" class="text-red-500 hover:text-red-700 font-semibold text-sm" onclick="return confirm('¿Seguro que quieres eliminarlo?')">Eliminar</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="py-4 text-center text-gray-400 italic">No se encontraron resultados.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
