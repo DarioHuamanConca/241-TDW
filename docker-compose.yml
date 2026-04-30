@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=TuPasswordFuerte123!
+    ports:
+      - "1433:1433"
+
+  web:
+    build: .
+    container_name: flask_web
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_SERVER=db
+      - DB_NAME=master
+      - DB_USER=sa
+      - DB_PASSWORD=TuPasswordFuerte123!
+    depends_on:
+      - db
